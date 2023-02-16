@@ -1,0 +1,34 @@
+﻿@model DietApp.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+      <div class="my-3 py-3">
+        <h1 class="display-2"><b>Witaj @Model.UserName</b></h1>
+      </div>
+      <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 600px; border-radius: 21px 21px 0 0;">
+        <div class="text-dark pt-5">
+         @if (@Model.BMR == 0)
+            {
+                <h3>Twoje zapotrzebowanie kaloryczne: <b>Uzupełnij dane</b></h3>
+                <h3>BMI: <b>Uzupełnij dane</b></h3>
+            }
+            else
+            {
+                <p>Zapotrzebowanie kaloryczne: <b>@Model.BMR kcal</b></p>
+                <p>BMI: <b>@Model.BMI</b></p>
+            }
+            <div class="mt-5">
+                <a asp-controller="User" asp-action="Calculate" type="button" class="btn btn-outline-dark w-75"><b>Uzupełnij swoje dane aby obliczyć BMI i zapotrzebowanie kaloryczne</b></a>
+            </div>
+            <div class="mt-2">
+                <a asp-controller="User" asp-action="DailyConsumptionList" type="button" class="btn btn-outline-dark w-75"> <b> Sprawdź swój dziennik </b> </a>
+            </div>
+        </div>
+    </div>
+    </div>
+
+

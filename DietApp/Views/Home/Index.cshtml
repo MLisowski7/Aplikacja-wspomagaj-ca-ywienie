@@ -1,0 +1,153 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Strona główna";
+}
+
+
+<!--  @if (SignInManager.IsSignedIn(User))
+{
+    <div class="text-center">
+        <a asp-controller="User" asp-action="Index">Panel użytkownika</a>
+    </div>
+
+}
+else
+{
+   
+}
+-->
+<main>
+
+    <div id="myCarousel" class="carousel slide " data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img  src="~/assets/slider2.jpg" class="bd-placeholder-img" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"></img>
+
+                <div class="container">
+                    <div class="carousel-caption shadow text-start shadow-lg ">
+                        <h1>Nie masz konta?</h1>
+                        <p>Zarejestruj się już teraz i korzystaj z wszystkich funkcjonalności strony.</p>
+                        <p><a class="btn btn-lg btn-dark ms-3" href="Products">Zarejestruj się</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/assets/slider1.jpg" class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777" /></svgsrc>
+
+                <div class="container">
+                    <div class="carousel-caption shadow shadow-lg ">
+                        <h1>Już dziś zadbaj o swoje zdrowie.</h1>
+                        <p>Nie wiesz od czego zacząć? Zajrzyj do zakładki przepisów i znajdź coś dla siebie.</p>
+                        <p><a class="btn btn-lg btn-dark" href="Products">Przejdź</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/assets/slider.jpg" class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777" /></img>
+
+                <div class="container">
+                    <div class="carousel-caption text-end shadow shadow-lg ">
+                        <h1>Już dziś zadbaj o swoje zdrowie.</h1>
+                        <p>Nie wiesz od czego zacząć? Zajrzyj do zakładki przepisów i znajdź coś dla siebie.</p>
+                        <p><a class="btn btn-lg btn-dark me-3" href="Products">Przejdź</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+
+    <div class="container marketing">
+        <div class="row">
+            <div class="col-lg-3">
+                <img class="rounded-circle shadow-4-strong" width="140" height="140" alt="produkty" src="~/assets/icon2.jpg" />
+                <h2>Produkty</h2>
+                <p>Sprawdź co ile ma kalorii, ile zawiera tłuszczu, białka i węglowodanów. </p>
+                <p><a class="btn btn-secondary" href="Products">Sprawdź &raquo;</a></p>
+            </div>
+
+            <div class="col-lg-3">
+                <img class="rounded-circle shadow-4-strong" width="140" height="140" alt="przepisy" src="~/assets/icon4.png" />
+                <h2>Przepisy</h2>
+                <p>Ciekawe propozycje dań sprosta nawet najbardziej wymagającym osobom.</p>
+                <p><a class="btn btn-secondary" href="Recipes">Sprawdź &raquo;</a></p>
+            </div>
+
+            <div class="col-lg-3">
+                <img class="rounded-circle shadow-4-strong" width="140" height="140" alt="porownywanie" src="~/assets/icon3.png" />
+                <h2>Porównywanie</h2>
+                <p>Porównuj dostępne produkty i sprawdź co tak naprawdę jesz.</p>
+                <p><a class="btn btn-secondary" href="Products/Comparison">Sprawdź &raquo;</a></p>
+            </div>
+
+            <div class="col-lg-3">
+                <img class="rounded-circle shadow-4-strong" width="140" height="140" alt="dziennik" src="~/assets/icon1.jpg" />
+                <h2>Dziennik</h2>
+                <p>Prowadź swój dziennik, i kontroluj spożycie kalorii.</p>
+                <p><a class="btn btn-secondary" href="User">Sprawdź &raquo;</a></p>
+            </div>
+        </div>
+
+
+        <!-- START THE FEATURETTES -->
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">Wiesz ile kalorii spożywasz? <span class="text-muted">Sprawdź już teraz!</span></h2>
+                <p class="lead"> XX% osób nie wie jakie jest ich dzienne zapotrzebowanie kaloryczne. Jesteś jednym z nich? Zmień to!</p>
+            </div>
+            <div class="col-md-5">
+                  <img src="~/assets/bg1.jpg" class="img-fluid" alt="Wild Landscape" />
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7 order-md-2">
+                <h2 class="featurette-heading"> Brak pomysłu na kolejne danie? <span class="text-muted">Pomożemy Ci.</span></h2>
+                <p class="lead">Znajdź smaczne i szybkie przepisy, które zrobisz bez wielkich umiejętności kulinarnych :D.</p>
+            </div>
+            <div class="col-md-5 order-md-1">  
+                <img src="~/assets/bg2.jpg" class="img-fluid" alt="Wild Landscape" />
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading"> Kontroluj swoją dietę. <span class="text-muted"> Twój organizm będzię Ci wdzięczny.</span></h2>
+                <p class="lead"> Prosty do prowadzenia dziennik, pomoze Ci kontrolować spożyte kalorie i nie przekroczyć Twojego limitu. </p>
+            </div>
+            <div class="col-md-5">
+                <img src="~/assets/bg3.jpg" class="img-fluid" alt="Wild Landscape" />
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <!-- /END THE FEATURETTES -->
+
+    </div><!-- /.container -->
+    
+</main>

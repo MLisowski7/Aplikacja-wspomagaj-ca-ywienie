@@ -1,0 +1,68 @@
+﻿@model DietApp.Models.Product
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center mt-5">Dodaj swój produkt</h2>
+
+<hr />
+
+<div class="col-md-10 mx-auto col-lg-5 mb-5">
+    <form asp-action="Create" method="post" enctype="multipart/form-data" class=" p-4 p-md-5 border rounded-3 bg-light">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          <div class="form-group mb-3">     
+            <label asp-for="Name" class="control-label" ></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+          </div>
+          <div class="form-group mb-3">
+                <label asp-for="FatPer100" class="control-label"></label>
+          <div class="input-group">
+                <input asp-for="FatPer100" type="number" step="0.1" class="form-control" />
+                <span class="input-group-text"> g </span>
+          </div>
+                <span asp-validation-for="FatPer100" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="CarboPer100" class="control-label"></label>
+            <div class="input-group">
+                <input asp-for="CarboPer100" class="form-control" />
+                <span class="input-group-text"> g </span>
+            </div>
+                <span asp-validation-for="CarboPer100" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ProteinPer100" class="control-label"></label>
+            <div class="input-group">
+                <input asp-for="ProteinPer100" class="form-control" />
+                <span class="input-group-text"> g </span>
+            </div>
+                <span asp-validation-for="ProteinPer100" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Image" class="control-label"></label><br />
+                <input asp-for="Image" accept="image/*" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div> 
+            
+            <div class="form-group mt-2">
+                <input type="submit" value="Dodaj produkt" class="w-100 btn btn-lg btn-success" />
+            </div>   
+          <hr class="my-4">
+            <div class="mt-2">
+                <a asp-action="Index" type="submit" class="w-100 btn btn-secondary">Wróć do listy produktów</a>
+             </div>
+        </form>
+      </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+           
+             
+                
+               
+           

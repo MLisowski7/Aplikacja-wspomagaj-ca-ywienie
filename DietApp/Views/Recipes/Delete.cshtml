@@ -1,0 +1,109 @@
+﻿@model DietApp.Models.Recipe
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center mt-5">Usuwanie przepisu</h2>
+
+<hr />
+
+<div class="w-75 mx-auto col-lg-5 mb-5 p-4 p-md-5 border rounded-3 bg-light">
+    <div class="form-group mb-3 h4">
+        <dl class="row">
+            <!--nwm czy te zdj bedzie dobre ?-->
+            <div class="d-flex justify-content-center">
+                <dd>
+                    @if (Model.ImageName == null)
+                    {
+                        <img decoding="async" src="@("~/default_image/default.jpg")" asp-append-version="true" width="100px" height="100px" />
+                    }
+                    else
+                    {
+                        <img decoding="async" src="@("~/images/"+Model.ImageName)" asp-append-version="true" width="200px" height="200px" />
+                    }
+                </dd>
+            </div>
+            <!--nwm czy te zdj bedzie dobre ?-->
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd class="w-50 ">
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="w-50">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.DifficultyLevel)
+            </dt>
+            <dd class="w-50">
+                @Html.DisplayFor(model => model.DifficultyLevel)
+            </dd>
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.PreparationTime)
+            </dt>
+            <dd class="w-50">
+                @Html.DisplayFor(model => model.PreparationTime)
+            </dd>
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.Portions)
+            </dt>
+            <dd class="w-50">
+                @Html.DisplayFor(model => model.Portions)
+            </dd>
+
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.TotalKcal)
+            </dt>
+            <dd class="w-50">
+                @Html.DisplayFor(model => model.TotalKcal)
+            </dd>
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.TotalFat)
+            </dt>
+            <dd class="w-50">
+                @Html.DisplayFor(model => model.TotalFat)
+            </dd>
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.TotalCarbo)
+            </dt>
+            <dd class="w-50">
+                @Html.DisplayFor(model => model.TotalCarbo)
+            </dd>
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.TotalProtein)
+            </dt>
+            <dd class="w-50">
+                @Html.DisplayFor(model => model.TotalProtein)
+            </dd>
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.TotalWeight)
+            </dt>
+            <dd class="w-50">
+                @Html.DisplayFor(model => model.TotalWeight)
+            </dd>
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.User)
+            </dt>
+            <dd class="w-50">
+                @Html.DisplayFor(model => model.User.UserName)
+            </dd>
+        </dl>
+
+        <div class="form-group mt-2">
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="RecipeId" />
+                <input type="submit" value="Usuń przepis" class="w-100 btn btn-lg btn-danger" />
+            </form>
+        </div>
+        <hr class="my-4">
+        <div class="mt-2">
+            <a asp-action="Index" class="w-100 btn btn-secondary">Wróć do listy przepisów</a>
+        </div>
+    </div>
+</div>

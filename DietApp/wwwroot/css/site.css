@@ -1,0 +1,254 @@
+
+html {
+    position: relative;
+    min-height: 100%;
+    font-size: 14px;
+}
+
+body {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    color: #5a5a5a;
+}
+
+
+/* STRONA GLOWNA
+-------------------------------------------------- */
+
+
+.carousel {
+    margin-bottom: 4rem;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.carousel-caption {
+    bottom: 3rem;
+    z-index: 10;
+    margin-bottom: 100px;
+    text-shadow: 2px 2px #000000;
+
+}
+    
+.carousel-item {
+    height: 32rem;
+}
+
+    .carousel-item > img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        height: 32rem;
+    }
+
+.marketing .col-lg-3 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.marketing h2 {
+    font-weight: 400;
+}
+
+.marketing .col-lg-3 p {
+    margin-right: .75rem;
+    margin-left: .75rem;
+}
+
+.featurette-divider {
+    margin: 5rem 0; 
+}
+
+.featurette-heading {
+    font-weight: 300;
+    line-height: 1;
+    /* rtl:remove */
+    letter-spacing: -.05rem;
+}
+
+
+/* Responsywny CSS
+-------------------------------------------------- */
+
+@media (min-width: 40em) {
+    .carousel-caption p {
+        margin-bottom: 1.25rem;
+        font-size: 1.25rem;
+        line-height: 1.4;
+    }
+
+    .featurette-heading {
+        font-size: 50px;
+    }
+}
+
+@media (min-width: 62em) {
+    .featurette-heading {
+        margin-top: 7rem;
+    }
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit -user-select: none;
+    - moz-user-sel ect: none;
+    user- select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-pl aceholder-img-lg {
+        font-size: 3.5rem;
+    }
+    html {
+        font-size: 16px;
+    }
+}
+
+/* LOGOWANIE
+-------------------------------------------------- */
+
+.card {
+    overflow: hidden;
+    border: 0 !important;
+    border-radius: 20px !important;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.img-left {
+    width: 45%;
+    background: url('../assets/logowanie.jpg') center;
+    background-size: cover;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.title {
+    margin-bottom: 2rem;
+}
+
+.form-input {
+    position: relative;
+}
+
+    .form-input input {
+        width: 100%;
+        height: 45px;
+        padding-left: 40px;
+        margin-top: 20px;
+        box-sizing: border-box;
+        box-shadow: none;
+        border: 1px solid #00000020;
+        border-radius: 50px;
+        outline: none;
+        background: transparent;
+    }
+
+    .form-input span {
+       padding-bottom: 10px;
+    }
+
+    .form-input input::placeholder {
+        color: black;
+        padding-left: 0px;
+    }
+
+    .form-input input:focus, .form-input input:valid {
+        border: 2px solid #e0b045;
+    }
+
+        .form-input input:focus::placeholder {
+            color: #454b69;
+        }
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #007bff !important;
+    border: 0px;
+}
+
+.form-box button[type="submit"] {
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50px;
+    background: #dca730;
+    color: #fff;
+    font-size: 90%;
+    font-weight: bold;
+    letter-spacing: .1rem;
+    transition: 0.5s;
+    padding: 12px;
+}
+
+    .form-box button[type="submit"]:hover {
+        background: #dc9630;
+    }
+
+.forget-link, .register-link {
+    color: #e0b045;
+    font-weight: bold;
+}
+
+    .forget-link:hover, .register-link:hover {
+        color: #e0b045;
+        text-decoration: none;
+    }
+
+.form-box .btn-social {
+    color: white !important;
+    border: 0;
+    font-weight: bold;
+}
+
+.form-box .btn-facebook {
+    background: #4866a8;
+}
+
+.form-box .btn-google {
+    background: #da3f34;
+}
+
+.form-box .btn-twitter {
+    background: #33ccff;
+}
+
+.form-box .btn-facebook:hover {
+    background: #3d578f;
+}
+
+.form-box .btn-google:hover {
+    background: #bf3b31;
+}
+
+.form-box .btn-twitter:hover {
+    background: #2eb7e5;
+}
+
+
+/* POROWNYWANIE
+-------------------------------------------------- */
+.b-example-divider {
+    height: 3rem;
+    background-color: rgba(0, 0, 0, .1);
+    border: solid rgba(0, 0, 0, .15);
+    border-width: 1px 0;
+    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+
+@media (min-width: 992px) {
+    .rounded-lg-3 {
+        border-radius: .3rem;
+    }
+}
+
+
+/* DODATKI
+-------------------------------------------------- */
+
+.shadow {
+    text-shadow: 2px 2px #000000;
+}

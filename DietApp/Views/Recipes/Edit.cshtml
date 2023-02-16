@@ -1,0 +1,77 @@
+﻿@model DietApp.Models.Recipe
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center mt-5">Edytuj produkt</h2>
+
+<hr />
+
+<div class="col-md-10 mx-auto col-lg-5 mb-5">
+    <form asp-action="Edit" class=" p-4 p-md-5 border rounded-3 bg-light">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="RecipeId" />      
+
+        <div class="form-group mb-3">
+            <label asp-for="UserId" class="control-label"></label>
+            <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>        
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+         <label asp-for="DifficultyLevel" class="control-label"></label>
+                <select asp-for="DifficultyLevel" class="form-select">
+                    <option value="" selected>--Wybierz--</option>
+                    <option value="VeryEasy">Bardzo łatwy</option>
+                    <option value="Easy">Łatwy</option>
+                    <option value="Medium">Średni</option>
+                    <option value="Hard">Trudny</option>
+                    <option value="VeryHard">Bardzo trudny</option>
+                </select>
+                <span asp-validation-for="DifficultyLevel" class="text-danger"></span>
+            </div>       
+       
+        <div class="form-group mb-3">
+            <label asp-for="PreparationTime" class="control-label"></label>
+            <div class="input-group">
+                <input asp-for="PreparationTime" class="form-control" />
+                <span class="input-group-text"> min </span>
+            </div>
+            <span asp-validation-for="PreparationTime" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Portions" class="control-label"></label>
+            <input asp-for="Portions" class="form-control" />
+            <span asp-validation-for="Portions" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mt-2">
+            <input type="submit" value="Zapisz zmiany" class="w-100 btn btn-lg btn-success" />
+        </div>
+        <hr class="my-4">
+        <div class="mt-2">
+            <a asp-action="Index" type="submit" class="w-100 btn btn-secondary">Wróć do listy przepisów</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

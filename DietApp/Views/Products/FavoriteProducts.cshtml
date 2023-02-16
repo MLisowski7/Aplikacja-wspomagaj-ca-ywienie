@@ -1,0 +1,54 @@
+﻿@model IEnumerable<DietApp.Models.Product>
+@using DietApp.Data
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "FavoriteProducts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mt-5 text-center">Twoje ulubione produkty</h1>
+<hr />
+
+<main>
+    <div class="d-flex justify-content-center">
+    <div class=" w-75 row d-flex justify-content-center p-4 p-md-5 border rounded-3 bg-light bg-gradient">
+        @foreach (var item in Model)
+        {
+            <div class="col-auto text-center">
+                <div class="card mb-4 rounded-3 shadow-lg" style="width: 16rem;">
+                    <div class="card-header py-3 text-white bg-warning border-warning">
+                        <h4 class="my-0 fw-normal">@Html.DisplayFor(modelItem => item.Name)</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            @if (item.ImageName == null)
+                            {
+                                <img decoding="async" src="@("~/default_image/default.jpg")" asp-append-version="true" height="100px" />
+                            }
+                            else
+                            {
+                                <img decoding="async" src="@("~/images/"+item.ImageName)" asp-append-version="true" height="100px" />
+                            }
+                        </p>
+                        <ul class="list-group mt-3 mb-3">
+                            <li class="list-group-item">@Html.DisplayFor(modelItem => item.KcalPer100) kcal <small class="text-muted fw-light">/100g</small></li>
+                            <li class="list-group-item">@Html.DisplayFor(modelItem => item.FatPer100) g <small class="text-muted fw-light">tłuszczu/100g</small></li>
+                            <li class="list-group-item">@Html.DisplayFor(modelItem => item.CarboPer100) g <small class="text-muted fw-light">węglowodanów/100g</small></li>
+                            <li class="list-group-item">@Html.DisplayFor(modelItem => item.ProteinPer100) g <small class="text-muted fw-light">białka/100g</small></li>
+                            <!-- <li class="list-group-item">@Html.DisplayFor(modelItem => item.RecipeId) <small class="text-muted fw-light"> - ID przepisu</small></li> -->
+                        </ul>
+                        <a type="button" class="w-30 btn btn-secondary" asp-action="Details" asp-route-id="@item.ProductId">Szczegóły</a>
+                    <form id="form" method="post" asp-action="RemoveFavorite">
+                        <input type="hidden" name="id" value="@item.ProductId"/>
+                        <input class="w-30 btn btn-danger mt-1" type="submit" value="Usuń z ulubionych" />
+                    </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    </div>
+</main>

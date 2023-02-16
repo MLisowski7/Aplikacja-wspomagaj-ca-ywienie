@@ -1,0 +1,59 @@
+﻿@model IEnumerable<DietApp.Models.DailyConsumption>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="bg-warning me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+   <div class="my-3 py-3">
+     <h1 class="display-2 shadow pb-3"><b>Twój dziennik</b></h1>
+   </div>
+   <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 1600px; border-radius: 21px 21px 0 0;">
+     <div class="text-dark pt-3">
+         <div class="mb-3">
+          <a asp-controller="User" asp-action="Index" type="button" class="btn btn-outline-dark w-75"> <b> Wróć do panelu </b> </a>
+        </div>
+
+         <table class="table">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">@Html.DisplayNameFor(model => model.Date)</th>
+              <th scope="col">@Html.DisplayNameFor(model => model.CaloricBalance)</th>
+              <th scope="col">Opcje</th>
+            </tr>
+          </thead>
+          <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                       @if(item.CaloricBalance == 0)
+                        {
+                            var caloric = Math.Abs(item.CaloricBalance);
+                            @Html.DisplayFor(modelItem => caloric)
+                            <text> kcal</text>
+                        }
+                        else{
+                            @Html.DisplayFor(modelItem => item.CaloricBalance)
+                            <text> kcal</text>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="DailyConsumption" asp-route-id="@item.DailyConsumptionId" class="btn btn-warning border border-dark rounded-3">Szczegóły</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+
+        </table>
+      </div>
+        <br /><br /><br /><br /><br />
+        <div>
+        <partial name="_DailyConsumptionChart" model=@Model />
+       </div>
+   </div>
+</div>

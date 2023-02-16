@@ -1,0 +1,238 @@
+﻿@using DietApp.Data
+@model PaginatedList<DietApp.Models.Product>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mt-5 text-center">Znajdź interesujące Cię produkty</h1>
+<hr />
+<div class="d-grid col-4 mx-auto mb-2">
+    <a asp-action="Create" class="btn btn-secondary text-uppercase">Dodaj produkt</a>
+</div>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color d-flex justify-content-center ">
+        <div class="mb-2">
+ 
+            <input class=" px-5" type="text" name="Search" placeholder="Wpisz nazwę produktu" value="@ViewData["CurrentFilter"]" /> <br />
+            <input type="submit" value="Szukaj" class="btn btn-default btn-dark w-100" />
+            @if (@ViewData["CurrentFilter"] != null)
+            {
+                <a style="text-decoration: none" asp-action="Index">@ViewData["CurrentFilter"] ✖</a>
+            }
+        </div>
+    </div>
+</form>
+<hr />
+
+
+<h3 class="text-center">Sortuj produkty</h3>
+<table class="table table-dark">
+    <thead>
+        <tr class="text-center border-light">
+            <th class="border border-light">
+                @if (Convert.ToString(@ViewData["NameSortParm"]) == "name_desc")
+                {
+                    <a class="non_format text-white" asp-route-search="@ViewData["CurrentFilter"]" asp-action="Index" asp-route-order="@ViewData["NameSortParm"]">Nazwa produktu ↑</a>
+                }
+                else if (Convert.ToString(@ViewData["Order"]) == "name_desc")
+                {
+                    <a class="non_format text-white" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]" asp-route-order="@ViewData["NameSortParm"]">Nazwa produktu ↓</a>
+                }
+                else 
+                {
+                    <a class="non_format text-white" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]" asp-route-order="@ViewData["NameSortParm"]">Nazwa produktu</a>
+                }
+            </th>
+            <th class="border border-light">
+                @if (Convert.ToString(@ViewData["Order"]) != "kcal" && Convert.ToString(@ViewData["Order"]) != "kcal_desc")
+                {
+                    <a class="non_format text-white" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]" asp-route-order="@ViewData["KcalSortParm"]">Kcal w 100g produktu</a>
+                }
+                else if (Convert.ToString(@ViewData["KcalSortParm"]) == "kcal")
+                {
+                    <a class="non_format text-white" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]" asp-route-order="@ViewData["KcalSortParm"]">Kcal w 100g produktu ↓</a>
+                }
+                else
+                {
+                    <a class="non_format text-white" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]" asp-route-order="@ViewData["KcalSortParm"]">Kcal w 100g produktu ↑</a>
+                }
+            </th>
+            <th class="border border-light">
+                @if (Convert.ToString(@ViewData["Order"]) != "fat" && Convert.ToString(@ViewData["Order"]) != "fat_desc")
+                {
+                    <a class="non_format text-white" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]" asp-route-order="@ViewData["FatSortParm"]">Tłuszcz w 100g produktu</a>
+                }
+                else if (Convert.ToString(@ViewData["FatSortParm"]) == "fat")
+                {
+                    <a class="non_format text-white" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]" asp-route-order="@ViewData["FatSortParm"]">Tłuszcz w 100g produktu ↓</a>
+                }
+                else
+                {
+                    <a class="non_format text-white" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]" asp-route-order="@ViewData["FatSortParm"]">Tłuszcz w 100g produktu ↑</a>
+                }
+            </th>
+            <th class="border border-light">
+                @if (Convert.ToString(@ViewData["Order"]) != "carbo" && Convert.ToString(@ViewData["Order"]) != "carbo_desc")
+                {
+                    <a class="non_format text-white" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]" asp-route-order="@ViewData["CarboSortParm"]">Węglowodany w 100g produktu</a>
+                }
+                else if (Convert.ToString(@ViewData["CarboSortParm"]) == "carbo")
+                {
+                    <a class="non_format text-white" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]" asp-route-order="@ViewData["CarboSortParm"]">Węglowodany w 100g produktu ↓</a>
+                }
+                else
+                {
+                    <a class="non_format text-white" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]" asp-route-order="@ViewData["CarboSortParm"]">Węglowodany w 100g produktu ↑</a>
+                }
+            </th>
+            <th class="border border-light">
+                @if (Convert.ToString(@ViewData["Order"]) != "protein" && Convert.ToString(@ViewData["Order"]) != "protein_desc")
+                {
+                    <a class="non_format text-white" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]" asp-route-order="@ViewData["ProteinSortParm"]">Białko w 100g produktu</a>
+                }
+                else if (Convert.ToString(@ViewData["ProteinSortParm"]) == "protein")
+                {
+                    <a class="non_format text-white" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]" asp-route-order="@ViewData["ProteinSortParm"]">Białko w 100g produktu ↓</a>
+                }
+                else 
+                {
+                    <a class="non_format text-white" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]" asp-route-order="@ViewData["ProteinSortParm"]">Białko w 100g produktu ↑</a>
+                }
+                
+            </th>
+        </tr>
+    </thead>
+</table> <hr />
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<div class="d-flex justify-content-center mb-2">
+    <a asp-action="Index"
+       asp-route-order="@ViewData["Order"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class=" me-5 btn btn-secondary @prevDisabled">
+        <
+    </a>
+    <a asp-action="Index"
+       asp-route-order="@ViewData["Order"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-secondary @nextDisabled">
+        >
+    </a>
+</div>
+<hr />
+
+  <main>
+    <div class="row d-flex justify-content-center">
+  @foreach (var item in Model) {
+            <div class="col-auto text-center">
+        <div class="card mb-4 rounded-3 shadow-lg" style="width: 16rem;">
+          <div class="card-header py-3 text-white bg-dark border-dark">
+            <h4 class="my-0 fw-normal">@Html.DisplayFor(modelItem => item.Name)</h4>
+          </div>
+          <div class="card-body">
+            <p>
+                @if (item.ImageName == null )
+            {    
+                    <img decoding="async" src="@("~/default_image/default.jpg")" asp-append-version="true" height="100px" />   
+            }
+            else
+            {    
+                    <img decoding="async" src="@("~/images/"+item.ImageName)" asp-append-version="true" height="100px" />
+            }
+            </p>
+            <ul class="list-group mt-3 mb-3">
+              <li class="list-group-item">@Html.DisplayFor(modelItem => item.KcalPer100) kcal <small class="text-muted fw-light">/100g</small></li>
+              <li class="list-group-item">@Html.DisplayFor(modelItem => item.FatPer100) g <small class="text-muted fw-light">tłuszczu/100g</small></li>
+              <li class="list-group-item">@Html.DisplayFor(modelItem => item.CarboPer100) g <small class="text-muted fw-light">węglowodanów/100g</small></li>
+              <li class="list-group-item">@Html.DisplayFor(modelItem => item.ProteinPer100) g <small class="text-muted fw-light">białka/100g</small></li>
+            </ul>
+            <a type="button" class="w-30 btn btn-outline-info" asp-action="Details" asp-route-id="@item.ProductId">Szczegóły</a>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        @if(ViewBag.Favorites.Contains((Product)item))
+                        {
+                            <form id="form" method="post" asp-action="RemoveFavorite">
+                                <input type="hidden" name="indexPage" value="true" />
+                                <input type="hidden" name="id" value="@item.ProductId" />
+                                <input class="w-30 btn btn-outline-danger mt-1" type="submit" value="Usuń z ulubionych" />
+                            </form>
+                        }
+                        else{
+                            <form id="form" method="post" asp-action="AddFavorite">
+                                <input type="hidden" name="id" value="@item.ProductId" />
+                                <input class="w-30 btn btn-outline-warning mt-1" type="submit" value="Dodaj do ulubionych" />
+                            </form>
+                        }
+                    }
+                    @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                    {
+                        <a type="button" class="btn btn-outline-warning mt-1" asp-action="Edit" asp-route-id="@item.ProductId">Edytuj</a>
+                        <a type="button" class="btn btn-outline-danger mt-1" asp-action="Delete" class="text-danger" asp-route-id="@item.ProductId">Usuń</a>
+                    }
+        </div>
+        </div>
+      </div>
+  }
+    </div>
+  </main>
+
+
+<div class="d-flex justify-content-between mx-5 mb-5">
+<a asp-action="Index"
+   asp-route-order="@ViewData["Order"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+    class="btn btn-lg btn-secondary @prevDisabled">
+    < Poprzednia strona
+</a>
+<a asp-action="Index"
+   asp-route-order="@ViewData["Order"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-lg btn-secondary @nextDisabled">
+    Nastepna strona >
+</a>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(document).ready(function () {
+        function Contains (text_one, text_two) {
+            if(text_one.indexOf(text_two) != -1)
+                return true;
+        }
+        $("#Search").keyup(function () {
+            var searchText = $("#Search").val().toLowerCase();
+            $(".Search").each(function () {
+                if (!Contains($(this).text().toLowerCase(), searchText)) {
+                    $(this).hide();
+                }
+                else {
+                    $(this).show();
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    a{
+        text-decoration: none;
+        color: black;
+    }
+    a:hover{
+        color:dimgrey;
+    }
+</style>

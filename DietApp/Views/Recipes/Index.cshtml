@@ -1,0 +1,144 @@
+﻿@using DietApp.Data
+@model PaginatedList<DietApp.Models.Recipe>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mt-5 text-center">Przepisy</h1>
+<hr />
+<div class="d-grid col-4 mx-auto mb-2">
+    <a asp-action="Create" class="btn btn btn-secondary text-uppercase">Dodaj przepis</a>
+</div>
+
+<div class="text-center">
+    <form asp-action="Index" method="get">
+        <div class="form-actions no-color">
+            <input type="text" class="w-50" placeholder="Czego szukasz?" name="Search" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Szukaj" class="btn btn-default btn-dark">
+            <input type="hidden" name="category" value="@ViewData["CurrentCategory"]" />
+            <div>
+                @if (@ViewData["CurrentFilter"] != null)
+                {
+                    <a style="text-decoration: none" asp-action="Index" asp-route-category="@ViewData["CurrentCategory"]">@ViewData["CurrentFilter"] ✖</a>
+                }
+            </div>
+        </div>
+    </form>
+</div>
+<hr />
+
+<h3 class="text-center">Kategorie</h3>
+
+
+
+    <div class="d-flex justify-content-center">
+        @if (@ViewData["CurrentCategory"] != null)
+        {
+            <a style="text-decoration: none" asp-action="Index" asp-route-search="@ViewData["CurrentFilter"]">@ViewData["CurrentCategory"] ✖</a>
+        }
+    </div>
+    <div class="d-flex d-row justify-content-center">
+    @foreach(var item in ViewBag.Categories)
+    {
+        <form asp-action="Index" method="get class="d-inline-flex">         
+                <input type="hidden" name="search" value="@ViewData["CurrentFilter"]">
+                <input class="btn btn-secondary mt-2 ms-2 border border-2 border-dark" type="submit" name="category" value="@item.Name" />        
+        </form>
+    }
+    </div>
+    <hr />
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<div class="d-flex justify-content-center mb-2">
+    <a asp-action="Index"
+       asp-route-order="@ViewData["Order"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class=" me-5 btn btn-secondary @prevDisabled">
+        <
+    </a>
+    <a asp-action="Index"
+       asp-route-order="@ViewData["Order"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-secondary @nextDisabled">
+        >
+    </a>
+</div>
+<hr />
+
+<div>
+    @if (Model.Count() == 0)
+    {
+        <p class="text-center">Brak wyników</p>
+    }
+    @foreach (var item in Model)
+    {
+        <div class="row border rounded pb-1 mx-2" >
+            <div class="col-1 d-flex justify-content-center bg-secondary ">
+            @if (item.ImageName == null)
+            {
+                <img decoding="async" src="@("~/default_image/default.jpg")" asp-append-version="true" height="100px" />
+            }
+            else
+            {
+                <img decoding="async" src="@("~/images/"+item.ImageName)" asp-append-version="true"  height="100px" />
+            }
+            </div>
+            <div class="col-10 text-center bg-secondary ">
+            <a asp-action="Details" asp-route-id="@item.RecipeId" class="h2 text-decoration-none text-white ">@item.Title</a>
+            </div>
+            <div class="col-1 bg-secondary">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                    @if (ViewContext.HttpContext.User.IsInRole("Admin") || UserManager.GetUserId(User) == item.UserId)
+                    {
+                    <a asp-action="Edit" class="btn btn-warning w-100 mt-2 border border-dark" asp-route-id="@item.RecipeId">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                        Edytuj 
+                       
+                    </a>
+                    <a asp-action="Delete" class="btn btn-danger w-100 mt-1 border border-dark" asp-route-id="@item.RecipeId">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+                        </svg>
+                        Usuń                    
+                    </a>
+                    }
+            }
+            </div>
+        </div>
+    }
+</div>
+
+
+<div class="d-flex justify-content-between m-5">
+<a asp-action="Index"
+   asp-route-order="@ViewData["Order"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+    class="btn btn-lg btn-secondary @prevDisabled">
+    < Poprzednia strona
+</a>
+<a asp-action="Index"
+   asp-route-order="@ViewData["Order"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-lg btn-secondary @nextDisabled">
+    Nastepna strona >
+</a>
+</div>
+
+
+

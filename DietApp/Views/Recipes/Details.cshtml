@@ -1,0 +1,111 @@
+﻿@model DietApp.Models.Recipe
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link rel="stylesheet" href="https://cdn.korzh.com/metroui/v4.5.1/css/metro-all.min.css">
+    <script src="https://cdn.korzh.com/metroui/v4.5.1/js/metro.min.js"></script>
+}
+
+<div class="text-start" style="margin-top: 80px; margin-left: 13%">
+    <a asp-action="Index" type="submit" class=" btn btn-lg btn-dark mb-2 " >Wróć do listy przepisów</a>
+</div>
+
+<div class="w-75 mx-auto col-lg-5 mb-5 p-4 p-md-5 border rounded-3 bg-light" style="max-width: 80%; margin-left:10%; ">
+    <div style="height:50px">
+        <div class="w-50" style="float:left">
+            <input data-role="rating"
+                   data-value="@ViewBag.Rating"
+                   data-message="(@ViewBag.CommentsCount)"
+                   data-static="true">
+        </div>
+        <div class="w-50 text-end" style="float:left">
+            <p>@Model.User.UserName</p>
+        </div>
+    </div>
+    <div class="text-center my-5">
+        <p class="display-3 m-3">@Model.Title</p>
+        @if (Model.ImageName != null)
+        {
+            <img decoding="async" src="@("~/images/"+Model.ImageName)" asp-append-version="true" width="400px" class="m-3" />
+        }
+        <div class="text-start">
+            <h4 class="mt-4">Przepis:</h4>
+            <p style="text-align: justify">@Model.Description</p>
+            <p><b>Składniki:</b></p>
+            <ul>
+                @foreach(var item in Model.Ingredients)
+                {
+                    <li><b>@item.Product.Name: </b>@item.Weight g</li>
+                }
+            </ul>
+        </div>
+        <div class="text-start mt-4">
+            <p><b>Czas przygotowania:</b> @Model.PreparationTime minut</p>
+            <p><b>Liczba porcji:</b> @Model.Portions</p>
+            <p><b>Wartość odżywcza:</b></p>
+            <ul>
+                <li>Kalorie: @Model.TotalKcal kcal</li>
+                <li>Tłuszcz: @Model.TotalFat g</li>
+                <li>Węglowodany: @Model.TotalCarbo g</li>
+                <li>Białko: @Model.TotalProtein g</li>
+            </ul>
+        </div>
+
+                <div class="text-start">
+            @if (Model.Category.Count() > 0)
+            {
+                <h5 class="mt-4">Kategorie:</h5>
+                @foreach (var item in Model.Category)
+                {
+                    @item.Name
+
+                    <text>, </text>
+                }
+            }
+                </div>
+
+     </div>
+    <div>
+        <partial name="_AddComment" model="null"/>
+    </div>
+    <div class="pt-5">
+        @if (Model.Comments.Count == 0)
+        {
+            <p>Brak komentarzy</p>
+        }
+        @foreach(var item in Model.Comments)
+        {
+            <div class="border rounded m-2 p-1" style="min-height:40px">
+                <div class="w-50" style="float:left">
+                    <b>@item.User.UserName</b>
+                </div>
+                <div class="text-end w-50" style="float:left">
+                    <input data-role="rating"
+                        data-value="@item.Rating"
+                        data-static="true" />
+                </div>
+                <p>@item.Content</p>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    @if (ViewContext.HttpContext.User.IsInRole("Admin") || UserManager.GetUserId(User) == item.UserId)
+                    {
+                        <div class="text-end">
+                            <form asp-action="DeleteComment">
+                                <input type="hidden" name="commentId" value="@item.CommentId" />
+                                <input type="submit" value="Usuń" />
+                            </form>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    </div>
+    <br />
+    <br />
+    <br />
+</div>

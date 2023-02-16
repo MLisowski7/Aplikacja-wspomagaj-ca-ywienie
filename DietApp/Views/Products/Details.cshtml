@@ -1,0 +1,79 @@
+﻿@model DietApp.Models.Product
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center mt-5">Szczegóły produktu</h2>
+
+<hr />
+
+<div class="w-75 mx-auto col-lg-5 mb-5 p-4 p-md-5 border rounded-3 bg-light">
+        <div class="form-group mb-3 h4">
+        <dl class="row">
+           <div class="d-flex justify-content-center"> <dd>
+                @if (Model.ImageName == null)
+                {
+                    <img decoding="async" src="@("~/default_image/default.jpg")" asp-append-version="true" width="100px" height="100px" />
+                }
+                else
+                {
+                    <img decoding="async" src="@("~/images/"+Model.ImageName)" asp-append-version="true" width="200px" height="200px" />
+                }
+            </dd>
+            </div>
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="w-50 ">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.KcalPer100)
+            </dt>
+            <dd class="w-50">
+                @Html.DisplayFor(model => model.KcalPer100)
+            </dd>
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.FatPer100)
+            </dt>
+            <dd class="w-50">
+                @Html.DisplayFor(model => model.FatPer100)
+            </dd>
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.CarboPer100)
+            </dt>
+            <dd class="w-50">
+                @Html.DisplayFor(model => model.CarboPer100)
+            </dd>
+            <dt class="w-50 text-end">
+                @Html.DisplayNameFor(model => model.ProteinPer100)
+            </dt>
+            <dd class="w-50">
+                @Html.DisplayFor(model => model.ProteinPer100)
+            </dd>
+            
+            @if (Model.RecipeId != 0)
+            {
+                <dt class="w-50 text-end">
+                    Przepis:
+                </dt>
+                <dd class="w-50">
+                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model.RecipeId " class="btn btn-lg btn-outline-info text-decoration-none">Przejdź do przepisu</a>
+                </dd>
+            }
+        </dl>
+
+        <div class="form-group mt-2">
+            @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+            {
+                <a asp-action="Edit" asp-route-id="@Model?.ProductId" class="w-100 btn btn-lg btn-warning ">Przejdź do edycji produktu</a>
+            }
+        </div>
+        <hr class="my-4">
+        <div class="mt-2">
+            <a href='javascript:history.go(-1)' class="w-100 btn btn-secondary">Wróć do listy produktów</a>
+        </div>
+</div>
+</div>

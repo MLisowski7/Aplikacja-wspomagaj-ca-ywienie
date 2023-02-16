@@ -1,0 +1,110 @@
+﻿@model DietApp.Models.DailyConsumption
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="bg-warning me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+   <div class="my-3 py-3">
+     <h1 class="display-2 shadow pb-3"><b>Lista posiłków z dnia @Model.Date</b></h1>
+   </div>
+   <div class="bg-light shadow-sm mx-auto" style="width: 90%; height: 600px; border-radius: 21px 21px 0 0;">
+      
+     <div class="text-dark pt-3 mx-2">
+         <div class="mb-3">
+          <a asp-controller="User" asp-action="Index" type="button" class="btn btn-outline-dark w-75"> <b> Wróć do panelu </b> </a>
+        </div>
+        <div class="row">
+            <div class="col-3 mx-auto mb-5 border rounded-3 bg-light">
+                <h3>Podsumowanie</h3>
+                <hr>
+                <ul class="list-group">
+                    <!--  
+                    <li class="list-group-item list-group-item-secondary"><b>Kalorie: @ViewBag.TotalKcal kcal </b></li>
+                    -->
+                    <li class="list-group-item list-group-item-secondary"><b>Tłuszcz: @ViewBag.TotalFat g </b></li>
+                    <li class="list-group-item list-group-item-secondary"><b>Węglowodany: @ViewBag.TotalCarbo g </b></li>
+                    <li class="list-group-item list-group-item-secondary"><b>Białko: @ViewBag.TotalProtein g </b></li>
+                    <li class="list-group-item list-group-item-secondary"><b>Bilans kaloryczny: @Model.CaloricBalance kcal </b></li>
+                </ul>
+                <a class="btn btn-dark my-2" asp-controller="User" asp-action="AddMeal" asp-route-dailyId="@Model.DailyConsumptionId">Dodaj posiłek</a>
+           
+            </div>             
+            <div class="col-8 mx-auto mb-5 border rounded-3 bg-light">
+         <table class="table">
+          <thead class="table-dark">
+            <tr>
+            <th>
+                #
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meals)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meals.First().Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meals.First().TotalKcal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meals.First().TotalFat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meals.First().TotalCarbo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meals.First().TotalProtein)
+            </th>
+            <th>
+                Opcje
+            </th>
+        </tr>
+          </thead>
+          <tbody>
+            @{
+                int counter = 1;
+            foreach (var item in Model.Meals)
+            {
+                <tr>
+                    <td>
+                       @counter<text>.</text>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Weight) g
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalKcal) kcal
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalFat) g
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalCarbo) g
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalProtein) g
+                    </td>
+                    <td>
+                        <form asp-action="DeleteMeal">
+                            <input type="hidden" name="mealId" value="@item.MealId" />
+                            <input type="hidden" name="dailyConsumptionId" value="@Model.DailyConsumptionId" />
+                            <input type="submit" value="Usuń posiłek" class="btn btn-danger border border-dark" />                               
+                        </form>
+                    </td>
+                </tr>
+                
+              counter = counter + 1;
+                
+            }
+            }
+         </tbody>
+        </table>
+        </div>
+      </div>
+      </div>
+   </div>
+</div>
